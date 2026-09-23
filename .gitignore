@@ -1,0 +1,8 @@
+venv/
+data/
+runs/
+reports/
+weights/
+*.pt
+data.local.yaml
+__pycache__/
