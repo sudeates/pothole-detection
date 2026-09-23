@@ -1,5 +1,0 @@
-path: C:/Staj projeleri/pothole_detection/data/MWPD_labels_v2_candidate
-train: train/images
-val: valid/images
-names:
-  0: pothole
