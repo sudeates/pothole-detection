@@ -31,18 +31,18 @@ batch değiştirilmez, hata raporu kaydedilir. Yeni batch ayrı deney olarak ele
 Ön kontrol, eğitim yapmaz:
 
 ```powershell
-.\venv\Scripts\python.exe .\train_reviewed.py
+.\venv\Scripts\python.exe .\train.py --config .\experiments\reviewed_v1_baseline.yaml
 ```
 
 Eğitim başlatılması ayrıca istendiğinde kullanılacak komut:
 
 ```powershell
-.\venv\Scripts\python.exe .\train_reviewed.py --start
+.\venv\Scripts\python.exe .\train.py --config .\experiments\reviewed_v1_baseline.yaml --start
 ```
 
 İkinci komut henüz çalıştırılmadı. Varsayılan çağrı yalnız ön kontrol yapar.
 Betik veri kopyasının tüm 4818 dosyasını SHA256 manifestiyle karşılaştırır,
-eklenmiş/eksik dosyaları denetler, model kayıtlarını ve CUDA'yı kontrol eder,
+eğitim/validation etiketlerini ve model yüklenmesini kontrol eder,
 Ultralytics'in yerel ayar doğrulamasını çalıştırır. Rapor reports/ altında tutulur.
 Yeni deneyler önceki çıktıların üzerine yazmaz. Venv oluşturma/paket kurma yoktur.
 

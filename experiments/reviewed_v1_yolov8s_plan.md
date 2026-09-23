@@ -12,10 +12,10 @@ Diğer ayarlar reviewed_v1_baseline.yaml ile aynıdır.
 Çalıştırma:
 
 ```powershell
-.\venv\Scripts\python.exe .\train_reviewed.py --recipe yolov8s --start
+.\venv\Scripts\python.exe .\train.py --config .\experiments\reviewed_v1_yolov8s.yaml --start
 ```
 
---start olmadan yalnız ön kontrol yapılır. Çıktı adı reviewed-v1-yolov8s
+--start olmadan yalnız ön kontrol yapılır. Çıktı adı reviewed_v1_yolov8s
 ön ekiyle ayrı ve benzersiz bir runs klasörüdür. Bellek hatasında otomatik
 batch değişimi yapılmaz. Eğitim günlüğü reports/yolov8s_training_20260916_122232.log
 dosyasına yazılır. Tamamlanma veya hata işareti ön kontrol rapor klasöründedir.

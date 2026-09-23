@@ -1,4 +1,4 @@
-# Prepared experiment. train_reviewed.py checks only unless --start is passed.
+# Prepared experiment. train.py checks only unless --start is passed.
 model: yolov8n.pt
 data: data.reviewed-v1.yaml
 epochs: 100
