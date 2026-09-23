@@ -25,6 +25,7 @@ manifestini denetler ve modeli yükler; eğitim başlatmaz:
 Eğitimi aynı komuta `--start` ekleyerek başlatın. Çıktı, config adı ve zaman
 damgasıyla benzersiz bir `runs/` klasörüne yazılır. YOLOv8s için
 `experiments/reviewed_v1_yolov8s.yaml` kullanılabilir.
+P2 tarifi ve bellek denemesi [P2 deney notunda](experiments/p2_reviewed_v1_plan.md).
 
 ## Validation değerlendirmesi
 
