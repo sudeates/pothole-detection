@@ -6,3 +6,4 @@ weights/
 *.pt
 data.local.yaml
 __pycache__/
+.tools/

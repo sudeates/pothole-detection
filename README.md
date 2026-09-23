@@ -1,5 +1,7 @@
 # Yerel pothole eğitimi
 
+Yeni HRP4K crop + P2 deneyi için [P2_EXPERIMENT.md](P2_EXPERIMENT.md) dosyasına bakın.
+
 GPU destekli mevcut venv ile bu klasörde çalıştırın:
 
 ```powershell
