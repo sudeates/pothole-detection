@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import random
 import shutil
 from pathlib import Path
@@ -25,7 +26,8 @@ import yaml
 from tile_yolo_dataset import boxes_from_yolo, project_box
 
 ROOT = Path(__file__).resolve().parent
-HRP4K = Path(r'C:\Users\sdnra\Downloads\HRP4K (1)\HRP4K')
+# Raw HRP4K root (train/valid/test, each with images/ and labels/). Override with --hrp4k or HRP4K_ROOT.
+HRP4K = Path(os.environ.get('HRP4K_ROOT', ROOT / 'data/HRP4K'))
 MWPD = ROOT / 'data/MWPD_reviewed_v1'
 OUT_SIZE = 640
 
@@ -67,11 +69,11 @@ def write_crop(image: np.ndarray, crop: tuple[int, int, int, int], boxes: list, 
     return len(rows)
 
 
-def crop_split(split: str, out_dir: Path, targets: np.ndarray, crops_per_image: int,
+def crop_split(hrp4k: Path, split: str, out_dir: Path, targets: np.ndarray, crops_per_image: int,
                negative_ratio: float, rng: random.Random) -> dict:
     for sub in ('images', 'labels'):
         (out_dir / sub).mkdir(parents=True, exist_ok=False)
-    src = HRP4K / split
+    src = hrp4k / split
     positives, negatives, sizes, crop_sides = 0, [], [], []
     for image_path in sorted((src / 'images').glob('*.jpg')):
         image = cv2.imread(str(image_path))
@@ -110,6 +112,8 @@ def copy_split(src: Path, dst: Path) -> int:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('--hrp4k', type=Path, default=HRP4K,
+                        help='Raw HRP4K root (default: HRP4K_ROOT env var or data/HRP4K).')
     parser.add_argument('--output', type=Path, default=ROOT / 'data/MWPD_HRP4K_scaled_v1')
     parser.add_argument('--valid-output', type=Path, default=ROOT / 'data/HRP4K_scaled_valid_v1')
     parser.add_argument('--crops-per-image', type=int, default=1)
@@ -117,6 +121,8 @@ def main() -> None:
                         help='Negative crops as a fraction of positive crops.')
     parser.add_argument('--seed', type=int, default=42)
     args = parser.parse_args()
+    if not (args.hrp4k / 'train/images').is_dir():
+        parser.error(f'{args.hrp4k} has no train/images; pass --hrp4k or set HRP4K_ROOT.')
     for path in (args.output, args.valid_output):
         if path.exists():
             raise FileExistsError(f'{path} exists; never overwriting data folders.')
@@ -124,11 +130,11 @@ def main() -> None:
     targets = mwpd_box_sizes()
     summary = dict(seed=args.seed, crops_per_image=args.crops_per_image, negative_ratio=args.negative_ratio,
                    mwpd_train_box_size_p10_p50_p90=np.percentile(targets, [10, 50, 90]).round(3).tolist())
-    summary['hrp4k_train'] = crop_split('train', args.output / 'train', targets, args.crops_per_image,
+    summary['hrp4k_train'] = crop_split(args.hrp4k, 'train', args.output / 'train', targets, args.crops_per_image,
                                         args.negative_ratio, random.Random(args.seed))
     summary['mwpd_train_images'] = copy_split(MWPD / 'train', args.output / 'train')
     summary['mwpd_valid_images'] = copy_split(MWPD / 'valid', args.output / 'valid')
-    summary['hrp4k_valid'] = crop_split('valid', args.valid_output / 'valid', targets, 1,
+    summary['hrp4k_valid'] = crop_split(args.hrp4k, 'valid', args.valid_output / 'valid', targets, 1,
                                         args.negative_ratio, random.Random(args.seed + 1))
 
     for path, train in ((args.output, 'train/images'), (args.valid_output, 'valid/images')):

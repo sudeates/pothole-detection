@@ -10,6 +10,7 @@ from collections import Counter
 from datetime import datetime
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 
@@ -18,7 +19,8 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parent
-DEFAULT_SOURCE = Path(r'C:\Users\sdnra\Downloads\HRP4K (1)\HRP4K\train')
+# Raw HRP4K train split. Override with --source-train or the HRP4K_ROOT env var.
+DEFAULT_SOURCE = Path(os.environ.get('HRP4K_ROOT', ROOT / 'data/HRP4K')) / 'train'
 DEFAULT_VALIDATION = ROOT / 'data/MWPD_reviewed_v1/valid'
 DEFAULT_OUTPUT = ROOT / 'data/HRP4K_tiled_v1'
 

@@ -179,7 +179,11 @@ manifestini denetler ve modeli yükler. Eğitimi başlatmaz:
 Eğitimi başlatmak için aynı komuta `--start` ekleyin. Çıktı, config adı ve
 zaman damgasıyla adlandırılan yeni bir `runs/` klasörüne yazılır. Diğer
 deneyler `experiments/` altında: `reviewed_v1_yolov8s.yaml`,
-`p2_reviewed_v1.yaml`, `mwpd_hrp4k_scaled.yaml`. P2 tarifi ve bellek denemesi
+`p2_reviewed_v1.yaml`, `mwpd_hrp4k_scaled.yaml`. `data.*.yaml` dosyalarındaki
+veri yolları proje köküne göre yazıldığı için komutları proje kökünden
+çalıştırın. Ham HRP4K verisi varsayılan olarak `data/HRP4K` klasöründen
+okunur. Başka bir konumda tutuyorsanız `HRP4K_ROOT` ortam değişkenini ayarlayın
+ya da `make_hrp4k_scaled.py` komutuna `--hrp4k` verin. P2 tarifi ve bellek denemesi
 [P2 deney notunda](experiments/p2_reviewed_v1_plan.md).
 
 ### Validation değerlendirmesi

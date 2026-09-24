@@ -189,7 +189,11 @@ training:
 Add `--start` to the same command to start training. Each run writes to a
 new `runs/` folder named after the config and a timestamp. Other experiments
 are in `experiments/`: `reviewed_v1_yolov8s.yaml`, `p2_reviewed_v1.yaml` and
-`mwpd_hrp4k_scaled.yaml`. The P2 recipe and its memory test are described in
+`mwpd_hrp4k_scaled.yaml`. Dataset paths in the `data.*.yaml` files are
+relative to the project root, so run commands from there. The raw HRP4K
+dataset is read from `data/HRP4K` by default. To use another location, set
+the `HRP4K_ROOT` environment variable or pass `--hrp4k` to
+`make_hrp4k_scaled.py`. The P2 recipe and its memory test are described in
 the [P2 experiment note](experiments/p2_reviewed_v1_plan.md) (in Turkish).
 
 ### Validation

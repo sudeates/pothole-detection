@@ -1,4 +1,4 @@
-path: C:/Staj projeleri/pothole_detection/data/MWPD_HRP4K_scaled_v1
+path: data/MWPD_HRP4K_scaled_v1
 train: train/images
 val: valid/images
 names:
